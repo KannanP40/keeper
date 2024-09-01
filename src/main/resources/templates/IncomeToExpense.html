@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Income to Expense Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="incomeExpenseChart"></canvas>
+
+    <script th:inline="javascript">
+        var ctx = document.getElementById('incomeExpenseChart').getContext('2d');
+        var incomeData = /*[[${incomeData}]]*/;
+        var expenseData = /*[[${expenseData}]]*/;
+        var labels = Object.keys(incomeData);
+        var income = Object.values(incomeData);
+        var expenses = Object.values(expenseData);
+
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Income',
+                    data: income,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }, {
+                    label: 'Expenses',
+                    data: expenses,
+                    backgroundColor: 'rgba(255, 40, 132, 0.2)',
+                    borderColor: 'rgba(200, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+</html>
